@@ -5,6 +5,7 @@
 
 const express = require("express");
 const { randomUUID } = require("crypto");
+const fs = require("fs"); // FileSystem
 
 const app = express();
 
@@ -19,7 +20,14 @@ app.get('/primeira-rota', (request, response) => {
 */
 
 // Criação do array dos produtos que irão ser "gravados"
-const produtos = [];
+let produtos = [];
+fs.readFile("produtos.json", "utf-8", (err, data) => {
+    if (err) {
+        console.log(err);
+    } else {
+        produtos = JSON.parse(data);
+    }
+});
 
 /**
  * Body => informações a serem recebidas
@@ -33,10 +41,13 @@ app.post("/produtos", (request, response) => {
 
     // "desestruturação" das informações que vierem no body
     const { nome, preco, cor } = request.body;
-    console.log("Produto: " + nome + ", Preço: " + preco);
+    //console.log("Produto: " + nome + ", Preço: " + preco);
     //console.log(cor);
 
     (cor == undefined) ? console.log("A cor não foi informada.") : console.log("Cor: " + cor);
+    if (cor == undefined){
+        return response.json({mensagem: "É necessário informar a cor!"});
+    }
 
     const produto = {
         id: randomUUID(),
@@ -46,6 +57,9 @@ app.post("/produtos", (request, response) => {
     };
 
     produtos.push(produto);
+
+    arquivoProdutos();
+
     return response.json(produto);
 });
 
@@ -89,6 +103,8 @@ app.put("/produtos/:id", (request, response) => {
         }
     }
 
+    arquivoProdutos();
+
     return response.json({mensagem: "Produto alterado com sucesso!"});
 });
 
@@ -104,9 +120,19 @@ app.delete("/produtos/:id", (request, response) => {
     const apagado = produtos.splice(indice, 1);
     const retorno = "Produto " + apagado[0].nome + " removido com sucesso!";
 
+    arquivoProdutos();
+
     return response.json({mensagem: retorno});
 });
 
-
+function arquivoProdutos() {
+    fs.writeFile("produtos.json", JSON.stringify(produtos), (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Produto inserido com sucesso");
+        }
+    });
+}
 
 app.listen(3001, () => console.log("Servidor executando na porta 3001"));

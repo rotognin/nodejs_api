@@ -2,9 +2,9 @@ POST http://localhost:3001/produtos HTTP/1.1
 content-type: application/json
 
 {
-    "nome": "caderno",
-    "preco": 5,
-    "cor": "verde"
+    "nome": "caneta",
+    "preco": 1,
+    "cor": "azul"
 }
 
 ###
@@ -17,13 +17,13 @@ GET http://localhost:3001/produtos/ff313947-e7b9-4908-a514-a578a133b813 HTTP/1.1
 
 ###
 
-PUT http://localhost:3001/produtos/eae444d2-61c3-4ab3-b6b5-2b5304c85497 HTTP/1.1
+PUT http://localhost:3001/produtos/b6b6a9ab-da46-4c20-8421-dcab98b771bc HTTP/1.1
 content-type: application/json
 
 {
-    "cor": "amarelo"
+    "preco": 15.95
 }
 
 ###
 
-DELETE http://localhost:3001/produtos/blablabla HTTP/1.1
+DELETE http://localhost:3001/produtos/644632a4-128f-4b06-806f-0be3533d84d0 HTTP/1.1
