@@ -1,0 +1,15 @@
+{
+  "name": "nodejs_inicio",
+  "version": "1.0.0",
+  "description": "Aprendendo NodeJS 2022 Code Drops",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "author": "Rodrigo Tognin",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19"
+  }
+}
