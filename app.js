@@ -6,6 +6,7 @@
 const express = require("express");
 const { randomUUID } = require("crypto");
 const fs = require("fs"); // FileSystem
+const funcoes = require("./funcoes");
 
 const app = express();
 
@@ -27,6 +28,19 @@ fs.readFile("produtos.json", "utf-8", (err, data) => {
     } else {
         produtos = JSON.parse(data);
     }
+});
+
+/**
+ * Rota apenas para teste
+ */
+app.get("/autor", (request, response) => {
+    var nome = funcoes.autor();
+    console.log(nome);
+    return response.json({
+        resultado: nome,
+        mensagem: funcoes.mensagem(),
+        valor: funcoes.calcular(4, 6)
+    });
 });
 
 /**
